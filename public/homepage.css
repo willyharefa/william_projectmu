@@ -1,0 +1,5 @@
+.container-fluid .navbar .wrapper-navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: grey;
+}

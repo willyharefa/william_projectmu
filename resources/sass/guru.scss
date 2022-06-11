@@ -1,0 +1,45 @@
+.section-absensi {
+    .container {
+        margin-top: 50px;
+        .row {
+            .btn {
+                padding: 20px;
+                height: 100px;
+                display: grid;
+                place-content: center;
+                color: white;
+                border-radius: 9px;
+            }
+            &.satu {
+                .btn {
+                    background-color: #3A86FF;
+                }
+            }
+            &.dua {
+                .btn {
+                    background-color: #8338EC;
+                }
+            }
+            &.tiga {
+                .btn {
+                    background-color: #E63946;
+                }
+            }
+            &.empat {
+                .btn {
+                    background-color: #F77F00;
+                }
+            }
+            &.lima {
+                .btn {
+                    background-color: #560BAD;
+                }
+            }
+            &.enam {
+                .btn {
+                    background-color: #0077B6;
+                }
+            }
+        }
+    }
+}

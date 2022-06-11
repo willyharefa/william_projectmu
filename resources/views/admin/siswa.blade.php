@@ -3,65 +3,92 @@
     <section class="section-mapel">
         <h1 class="mt-4">Daftar Siswa</h1>
 
-        <div class="col-md-6 col-sm-12">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#tambah-siswa">
-                Tanbah Siswa
+        <div class="container">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-student">
+                Tambah Siswa
             </button>
-            
-            <!-- Modal -->
-            <div class="modal fade" id="tambah-siswa" tabindex="-1">
-                <form action="{{ route('create_siswa') }}" method="POST">
-                    @csrf
-                    <div class="modal-dialog modal-dialog-centered">
+            <form action="{{ route('create_siswa') }}" method="post">
+                @csrf
+                <div class="modal fade" id="add-student" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-lg modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title">Data Siswa</h5>
                             </div>
                             <div class="modal-body">
-                                <div class="row">
-                                    <div class="mb-3">
-                                        <label for="name_siswa" class="form-label">Nama siswa</label>
-                                        <input type="text" class="form-control" id="name_siswa" name="nama_siswa" required autocomplete="off" spellcheck="false" placeholder="Ex: Nurhalimah, S.Pd" value="{{ old('nama_siswa') }}" autofocus>
+                                <div class="row mb-3">
+                                    <label for="name" class="col-md-3 col-form-label">Nama Lengkap</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="name" name="name" required autocomplete="off" spellcheck="false" value="{{ old('name') }}">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                                        <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" required value="{{ old('tg_lahir') }}">
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="birthday" class="col-md-3 col-form-label">Tanggal Lahir</label>
+                                    <div class="col-md-9">
+                                        <input type="date" class="form-control" id="birthday" name="birthday" required value="{{ old('birthday') }}">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                                        <select class="form-select" name="jenis_kelamin">
-                                            <option selected disabled>Pilih jenis kelamin :</option>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="gender" class="col-md-3 col-form-label">Jenis Kelamin</label>
+                                    <div class="col-md-9">
+                                        <select class="form-select" name="gender" id="gender" required>
+                                            <option selected disabled>Pilih jenis kelamin</option>
                                             <option value="Pria">Pria</option>
                                             <option value="Perempuan">Perempuan</option>
                                         </select>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat</label>
-                                        <input type="text" class="form-control" id="alamat" name="alamat" required autocomplete="off" spellcheck="false" placeholder="Masukan alamat" value="{{ old('alamat') }}">
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="address" class="col-md-3 col-form-label">Alamat</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="address" id="address" required autocomplete="off" spellcheck="false" value="{{ old('address') }}">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="nisn" class="form-label">NISN (Nomor Identitas siswa)</label>
-                                        <input type="text" class="form-control" id="nisn" name="nisn" required autocomplete="off" spellcheck="false" placeholder="Ex: 177-000-110-11" value="{{ old('nisn') }}">
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="nisn" class="col-md-3 col-form-label">NISN</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="nisn" id="nisn" required autocomplete="off" spellcheck="false" value="{{ old('nisn') }}">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="class" class="col-md-3 col-form-label">Kelas</label>
+                                    <div class="col-md-9">
+                                        <select class="form-select" name="class" id="class" required>
+                                            <option selected disabled>Pilih Kelas</option>
+                                            @forelse ($kelas as $item)
+                                            <option value="{{ $item->class }}">{{ $item->class }}</option>
+                                            @empty
+                                            <option disabled>Kelas Kosong</option>
+                                            @endforelse
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary">Simpan Data</button>
+                                <button type="submit" class="btn btn-primary" data-bs-target="#account" data-bs-toggle="modal">Selanjutnya</button>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-        <div class="row g-0 mt-3">
-            @if ($message = session('success')) 
-            <div class="alert alert-success mt-3" role="alert">
-                {{ $message }}
+
+        <div class="container mb-3">
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-danger" role="alert">
+                {{ $error }}
             </div>
-            @endif
+            @endforeach
+        </div>
+
+        @if ($message = Session::get('success'))
+        <div class="alert alert-danger" role="alert">
+            {{ $message }}
+        </div>
+        @endif
+
+        <div class="row g-0 mt-3">
             <div class="table-responsive">
                 <table class="table table-borderless align-middle text-nowrap">
                     <thead class="table-light">
@@ -69,9 +96,7 @@
                             <th scope="col">No</th>
                             <th scope="col">NISN</th>
                             <th scope="col">Nama</th>
-                            <th scope="col">Jenis Kelamin</th>
-                            <th scope="col">Tgl Lahir</th>
-                            <th scope="col">Alamat</th>
+                            <th scope="col">Kelas</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
@@ -80,12 +105,10 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->nisn }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->jenis_kelamin }}</td>
-                            <td>{{ $item->tgl_lahir->format('d F Y') }}</td>
-                            <td>{{ $item->alamat }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->class }}</td>
                             <td>
-                                <button type="button" class="btn btn-edit bg-warning" data-bs-toggle="modal" data-bs-target="#edit-siswa-{{ $item->id }}">
+                                <button type="button" class="btn bg-warning" data-bs-toggle="modal" data-bs-target="#edit-siswa-{{ $item->id }}">
                                     <i class="fas fa-edit"></i>
                                     Edit
                                 </button>
@@ -97,34 +120,33 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data siswa</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <h5 class="modal-title">Edit Data siswa</h5>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="mb-3">
-                                                            <label for="name_siswa" class="form-label">Nama siswa</label>
-                                                            <input type="text" class="form-control" id="name_siswa" name="new_name_siswa" required autocomplete="off" spellcheck="false" placeholder="Ex: Nurhalimah, S.Pd" value="{{ $item->nama_siswa }}" autofocus>
+                                                            <label class="form-label">Nama siswa</label>
+                                                            <input type="text" class="form-control" name="new_name" required autocomplete="off" spellcheck="false" value="{{ $item->name }}" autofocus>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Tanggal Lahir</label>
-                                                            <input type="date" class="form-control" name="new_tgl_lahir" required value="{{ $item->tgl_lahir->format('Y-m-d') }}">
+                                                            <input type="date" class="form-control" name="new_birthday" required value="{{ $item->birthday->format('Y-m-d') }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                                                            <select class="form-select" name="new_jenis_kelamin">
-                                                                <option selected>{{ $item->jenis_kelamin }}</option>
+                                                            <label class="form-label">Jenis Kelamin</label>
+                                                            <select class="form-select" name="new_gender">
+                                                                <option selected>{{ $item->gender }}</option>
                                                                 <option value="Pria">Pria</option>
                                                                 <option value="Perempuan">Perempuan</option>
                                                             </select>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="alamat" class="form-label">Alamat</label>
-                                                            <input type="text" class="form-control" id="alamat" name="new_alamat" required autocomplete="off" spellcheck="false" placeholder="Masukan alamat" value="{{ $item->alamat }}">
+                                                            <label class="form-label">Alamat</label>
+                                                            <input type="text" class="form-control" name="new_gender" required autocomplete="off" spellcheck="false" value="{{ $item->gender }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="nisn" class="form-label">NUPTK (Nomor Identitas siswa)</label>
-                                                            <input type="text" class="form-control" id="nisn" name="new_nisn" required autocomplete="off" spellcheck="false" placeholder="Masukan NUPTK" value="{{ $item->nisn }}">
+                                                            <label class="form-label">NISN (Nomor Induk siswa Nasional)</label>
+                                                            <input type="text" class="form-control" name="new_nisn" required autocomplete="off" spellcheck="false" value="{{ $item->nisn }}">
                                                         </div>
                                                     </div>
                                                 </div>

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
-use App\Models\Kehadiran;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Siswa;
+use App\Models\Kehadiran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -59,26 +60,43 @@ class AdminController extends Controller
 
     public function createGuru(Request $request)
     {
-        $request->validate([
-            'username' => 'unique:gurus',
-            'password' => 'min:6'
-        ],
-        [
-            'username.unique' => 'Username inputan harus unik dari database',
-            'password.min' => 'Password minimal 6 karakter'
-        ]);
-
-        Guru::create([
-            'nuptk' => $request->nuptk,
-            'nama_guru' => $request->nama_guru,
-            'tgl_lahir' => $request->tgl_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp,
-            'username' => $request->username,
-            'password' => Hash::make($request->password)
-        ]);
-        return redirect()->back()->with("success", "Sukses, data guru $request->nama_guru berhasil ditambahkan.");
+        $validator = Validator::make(
+            $request->validate([
+                'username' => 'required|unique:gurus',
+                'password' => 'required|min:6|confirmed',
+                'password_confirmation' => 'required',
+                'email' => 'email:dns|unique:gurus',
+                'nip' => 'unique:gurus|min:9',
+                'nuptk' => 'unique:gurus|min:16'
+            ]),
+            [
+                'username.unique' => 'Username harus unik !',
+                'password.min' => 'Password minimal 6 karakter',
+                'password.confirmed' => 'Password konfirmasi tidak sesuai',
+                'email.unique' => 'Email harus unik !',
+                'nip.unique' => 'NIP harus unik !',
+                'nuptk.unique' => 'NUPTK harus unik !',
+                'nuptk.min' => 'NUPTK minimal 16 digit',
+                'nip.min' => 'NIP minimal 9 digit'
+            ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+            Guru::create([
+                'name' => $request->name,
+                'birthday' => $request->birthday,
+                'gender' => $request->gender,
+                'address' => $request->address,
+                'nip' => $request->nip,
+                'nuptk' => $request->nuptk,
+                'grade' => $request->grade,
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+                'email' => $request->email
+            ]);
+            return redirect()->back()->with("success", "Sukses, data guru $request->nama_guru berhasil ditambahkan.");
+        // }
+        
     }
 
     public function updateGuru(Request $request, $id)
@@ -109,21 +127,31 @@ class AdminController extends Controller
     {
         $title = "Data Siswa";
         $siswa = Siswa::all();
-        return view('admin.siswa', compact('title', 'siswa'));
+        $kelas = Kelas::all();
+        return view('admin.siswa', compact('title', 'siswa', 'kelas'));
     }
 
     public function createSiswa(Request $request)
     {
-        $request->validate([
-            'nisn' => 'unique:siswas',
-        ]);
+        $message = [
+            'nisn.unique' => 'NISN siswa harus unik !'
+        ];
+
+        $validator = Validator::make($request->validate([
+            'nisn' => 'unique:siswas'
+        ]), $message);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
 
         Siswa::create([
             'nisn' => $request->nisn,
-            'nama' => $request->nama_siswa,
-            'tgl_lahir' => $request->tgl_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat' => $request->alamat
+            'name' => $request->name,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
+            'address' => $request->address,
+            'class' => $request->class
         ]);
         return redirect()->back()->with('success', 'Selamat, data siswa berhasil ditambahkan.');
     }
@@ -150,15 +178,8 @@ class AdminController extends Controller
 
     public function createKelas(Request $request)
     {
-        $request->validate([
-            'kode_kelas' => 'unique:kelas'
-        ],
-        [
-            'kode_kelas.unique' => 'Kode kelas tidak boleh duplicate'
-        ]);
         Kelas::create([
-            'kode_kelas' => $request->kode_kelas,
-            'nama_kelas' => $request->nama_kelas
+            'class' => $request->name
         ]);
         return redirect()->back()->with('success', 'Data kelas baru berhasil ditambahkan');
     }
@@ -166,8 +187,7 @@ class AdminController extends Controller
     public function updateKelas(Request $request, $id)
     {
         Kelas::find($id)->update([
-            'kode_kelas' => $request->kode_kelas,
-            'nama_kelas' => $request->nama_kelas
+            'class' => $request->new_name
         ]);
         return redirect()->back()->with('success', 'Data kelas berhasil diperbaharui');
     }

@@ -17,16 +17,13 @@ class GuruController extends Controller
     {
         $title = "Data Absensi";
         $data_siswa = Siswa::all();
-        $data_guru = Guru::all();
         $data_kelas = Kelas::all();
         $data_mapel = Mapel::all();
-        $kehadiran = Kehadiran::all();
-        return view('admin.kehadiran', compact('title', 'data_kelas', 'data_siswa', 'data_guru', 'data_mapel', 'kehadiran'));
+        return view('admin.absensi', compact('title', 'data_kelas', 'data_siswa', 'data_mapel'));
     }
 
     public function createAbsensi(Request $request)
     {
-        dd($request);
         Kehadiran::create([
             'siswa_id' => $request->siswa_id,
             'guru_id' => $request->guru_id,
@@ -46,27 +43,5 @@ class GuruController extends Controller
             'mapel_id' => $request->new_mapel_id
         ]);
         return redirect()->back()->with('success', 'Data kehadiran berhasil diperbaharui');
-    }
-
-    public function examp(Request $request)
-    {
-        $tampung_data = $request->input('data.1');
-        // $tampung_data = $request;
-        dd($tampung_data);
-        // foreach($tampung_data as $pecahkan_data) {
-        //      dd($pecahkan_data);
-        // };
-    }
-
-    public function tambah_data_kelas(Request $request)
-    {
-        dd($request);
-    }
-
-    public function dataKelas()
-    {
-        $users = DB::table('kelas_1a')->get();
-        $title = "Halaman data kelas";
-        return view('admin.input_data_kelas', compact('users', 'title'));
     }
 }

@@ -5,106 +5,137 @@
 
         <div class="col-md-6 col-sm-12">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#tambah-guru">
-                Tanbah Guru
+            <button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#add-teacher">
+                Tambah Guru
             </button>
             
             <!-- Modal -->
-            <div class="modal fade" id="tambah-guru" tabindex="-1">
-                <form action="{{ route('create_guru') }}" method="POST">
-                    @csrf
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Guru</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="mb-3">
-                                            <label for="name_guru" class="form-label">Nama Guru</label>
-                                            <input type="text" class="form-control" id="name_guru" name="nama_guru" required autocomplete="off" spellcheck="false" placeholder="Ex: Nurhalimah, S.Pd" value="{{ old('name_guru') }}" autofocus>
+            <form action="{{ route('create_guru') }}" method="POST">
+                @csrf
+                {{-- Modal For Detail Teacher --}}
+                <div class="modal fade" id="add-teacher" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-lg modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Data Guru</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row mb-3">
+                                        <label for="name" class="col-md-3 col-form-label">Nama Lengkap</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="name" name="name" required autocomplete="off" spellcheck="false" value="{{ old('name') }}">
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                                            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" required value="{{ old('tg_lahir') }}">
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="birthday" class="col-md-3 col-form-label">Tanggal Lahir</label>
+                                        <div class="col-md-9">
+                                            <input type="date" class="form-control" id="birthday" name="birthday" required value="{{ old('birthday') }}">
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                                            <select class="form-select" name="jenis_kelamin">
-                                                <option selected disabled>Pilih jenis kelamin :</option>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="gender" class="col-md-3 col-form-label">Jenis Kelamin</label>
+                                        <div class="col-md-9">
+                                            <select class="form-select" name="gender" id="gender" required>
+                                                <option selected disabled>Pilih jenis kelamin</option>
                                                 <option value="Pria">Pria</option>
                                                 <option value="Perempuan">Perempuan</option>
                                             </select>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="alamat" class="form-label">Alamat</label>
-                                            <input type="text" class="form-control" id="alamat" name="alamat" required autocomplete="off" spellcheck="false" placeholder="Masukan alamat" value="{{ old('alamat') }}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="nuptk" class="form-label">NUPTK (Nomor Identitas Guru)</label>
-                                            <input type="text" class="form-control" id="nuptk" name="nuptk" required autocomplete="off" spellcheck="false" placeholder="Ex: 177-000-110-11" value="{{ old('nuptk') }}">
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="address" class="col-md-3 col-form-label">Alamat</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="address" id="address" required autocomplete="off" spellcheck="false" value="{{ old('address') }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="mb-3">
-                                            <label for="username" class="form-label"><strong>Username</strong></label>
-                                            <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" required autocomplete="off" spellcheck="false" placeholder="Masukan username" value="{{ old('username') }}">
-                                            <div class="form-text">Username guru harus unik dari database.</div>
-                                            @error('username')
-                                            <div class="alert alert-danger my-2" role="alert">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
+                                    <div class="row mb-3">
+                                        <label for="nip" class="col-md-3 col-form-label">NIP</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="nip" id="nip" required autocomplete="off" spellcheck="false" value="{{ old('nip') }}">
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="password" class="form-label"><strong>Password</strong></label>
-                                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="off" spellcheck="false" placeholder="Masukan password" value="{{ old('password') }}">
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="nuptk" class="col-md-3 col-form-label">NUPTK</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="nuptk" id="nuptk" required autocomplete="off" spellcheck="false" value="{{ old('nuptk') }}">
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="no_telp" class="form-label"><strong>No Telepon</strong></label>
-                                            <input type="text" class="form-control" id="no_telp" name="no_telp" required autocomplete="off" spellcheck="false" placeholder="Masukan nomor telepon" value="{{ old('no_telp') }}">
-                                            <div class="form-text">Pastikan input nomor telepon yang aktif.</div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="grade" class="col-md-3 col-form-label">Pangkat</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="grade" id="grade" required autocomplete="off" spellcheck="false" value="{{ old('grade') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    <button type="button" class="btn btn-primary" data-bs-target="#account" data-bs-toggle="modal">Selanjutnya</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                {{-- Modal For Account Detail --}}
+                <div class="modal fade" id="account" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-lg modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Data Akun</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <label for="username" class="col-md-3 col-form-label">Username</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="username" name="username" required autocomplete="off" spellcheck="false" value="{{ old('username') }}">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="email" class="col-md-3 col-form-label">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control" id="email" name="email" required autocomplete="off" spellcheck="false" value="{{ old('email') }}">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="password" class="col-md-3 col-form-label">Password</label>
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="password_confirmation" class="col-md-3 col-form-label">Konfirmasi Password</label>
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                        <div id="passwordHelpBlock" class="form-text">
+                                            Konfirmasi kembali password anda, password harus minimal 6 karakter.
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                <button class="btn btn-secondary" data-bs-target="#add-teacher" data-bs-toggle="modal">Kembali</button>
                                 <button type="submit" class="btn btn-primary">Simpan Data</button>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+
+        <div class="container">
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-danger" role="alert">
+                {{ $error }}
+            </div>
+        @endforeach
+        </div>
+
         <div class="row g-0 mt-3">
-            @if ($message = session('success')) 
-            <div class="alert alert-success mt-3" role="alert">
-                {{ $message }}
-            </div>
-            @endif
-            @if ($errors->first('username.unique'))
-            <div class="alert alert-danger mt-3" role="alert">
-                {{ $errors->first('username.unique') }}
-            </div>
-            @endif
-            @if ($errors->first('password.min'))
-            <div class="alert alert-danger mt-3" role="alert">
-                {{ $errors->first('password.min') }}
-            </div>
-            @endif
             <div class="table-responsive">
                 <table class="table table-borderless align-middle text-nowrap">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">NUPTK</th>
                             <th scope="col">Nama</th>
-                            <th scope="col">Tgl Lahir</th>
-                            <th scope="col">Alamat</th>
-                            <th scope="col">No. Telp</th>
+                            <th scope="col">NUPTK</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
@@ -112,11 +143,8 @@
                         @forelse ($guru as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->name }}</td>
                             <td>{{ $item->nuptk }}</td>
-                            <td>{{ $item->nama_guru }}</td>
-                            <td>{{ $item->tgl_lahir->format('d F Y') }}</td>
-                            <td>{{ $item->alamat }}</td>
-                            <td>{{ $item->no_telp }}</td>
                             <td>
                                 <button type="button" class="btn btn-edit bg-warning" data-bs-toggle="modal" data-bs-target="#edit-guru-{{ $item->id }}">
                                     <i class="fas fa-edit"></i>
@@ -134,51 +162,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="mb-3">
-                                                                <label for="name_guru" class="form-label">Nama Guru</label>
-                                                                <input type="text" class="form-control" id="name_guru" name="new_name_guru" required autocomplete="off" spellcheck="false" placeholder="Ex: Nurhalimah, S.Pd" value="{{ $item->nama_guru }}" autofocus>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tanggal Lahir</label>
-                                                                <input type="date" class="form-control" name="new_tgl_lahir" required value="{{ $item->tgl_lahir->format('Y-m-d') }}">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                                                                <select class="form-select" name="new_jenis_kelamin">
-                                                                    <option selected>{{ $item->jenis_kelamin }}</option>
-                                                                    <option value="Pria">Pria</option>
-                                                                    <option value="Perempuan">Perempuan</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="alamat" class="form-label">Alamat</label>
-                                                                <input type="text" class="form-control" id="alamat" name="new_alamat" required autocomplete="off" spellcheck="false" placeholder="Masukan alamat" value="{{ $item->alamat }}">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="nuptk" class="form-label">NUPTK (Nomor Identitas Guru)</label>
-                                                                <input type="text" class="form-control" id="nuptk" name="new_nuptk" required autocomplete="off" spellcheck="false" placeholder="Masukan NUPTK" value="{{ $item->nuptk }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-sm-12">
-                                                            <div class="mb-3">
-                                                                <label for="username" class="form-label"><strong>Username</strong></label>
-                                                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="new_username" required autocomplete="off" spellcheck="false" placeholder="Masukan username" value="{{ $item->username }}">
-                                                                <div class="form-text">Username guru harus unik dari database.</div>
-                                                                @error('username')
-                                                                <div class="alert alert-danger my-2" role="alert">
-                                                                    {{ $message }}
-                                                                </div>
-                                                                @enderror
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="no_telp" class="form-label"><strong>No Telepon</strong></label>
-                                                                <input type="text" class="form-control" id="no_telp" name="new_no_telp" required autocomplete="off" spellcheck="false" placeholder="Masukan nomor telepon" value="{{ $item->no_telp }}">
-                                                                <div class="form-text">Pastikan input nomor telepon yang aktif.</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    ...
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

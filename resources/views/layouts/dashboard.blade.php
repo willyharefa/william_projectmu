@@ -6,17 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{{ $title }}</title>
-        <link href="{{ asset('/css/styles.css') }}" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="{{ asset('/css/styles.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('/css/guru.css') }}" />
+        <title>{{ $title }}</title>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="{{ route('dashboard') }}">Dashboard
-            </a>
+            <a class="navbar-brand ps-3" href="{{ route('dashboard') }}">Dashboard</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar-->
@@ -69,8 +69,8 @@
                             </a>
                             <div class="collapse" id="absensi" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('absensi') }}">Input Data</a>
-                                    <a class="nav-link" href="#">Absensi</a>
+                                    <a class="nav-link" href="{{ route('absensi') }}">Absensi Siswa</a>
+                                    <a class="nav-link" href="#">Nilai Siswa</a>
                                     <a class="nav-link" href="/data_kelas">Data Kelas</a>
                                 </nav>
                             </div>

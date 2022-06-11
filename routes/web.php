@@ -45,9 +45,6 @@ Route::middleware('auth:web,guru,admin')->group(function () {
 
 Route::middleware('auth:guru')->group(function () {
     Route::get('/dashboard/guru/absensi', [GuruController::class, 'absensi'])->name('absensi');       // Masuk ke halaman Input Data Kehadiran
-    Route::post('/tambah/absensi', [GuruController::class, 'examp'])->name('example_exe');
-    Route::get('/data_kelas', [GuruController::class, 'dataKelas'])->name('data_kelas');
-    Route::post('/tambah_data_kelas', [GuruController::class, 'tambah_data_kelas']);
 });
 
 // Kode program untuk menambah mapel dan membuat mapel
@@ -73,7 +70,7 @@ Route::post('/dashboard/admin/update/absensi/{id}', [AdminController::class, 'up
 Route::get('/create-admin', function() {
     Admin::create([
         'name' => 'William',
-        'username' => 'will_01',
-        'password' => Hash::make('123123')
+        'username' => 'admin',
+        'password' => Hash::make('admin')
     ]);
 });

@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('gurus', function (Blueprint $table) {
             $table->id();
-            $table->string('nuptk');
-            $table->string('nama_guru');
-            $table->date('tgl_lahir');
-            $table->enum('jenis_kelamin', ['Pria', 'Perempuan']);
-            $table->string('alamat');
-            $table->string('no_telp');
-            $table->string('username')->unique('gurus');
+            $table->string('name');
+            $table->date('birthday');
+            $table->enum('gender', ['Pria', 'Perempuan']);
+            $table->string('address');
+            $table->string('nip')->unique();
+            $table->string('nuptk')->unique();
+            $table->string('grade');
+            $table->string('username')->unique();
             $table->string('password');
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

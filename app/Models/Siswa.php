@@ -12,7 +12,7 @@ class Siswa extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'tgl_lahir' => 'date'
+        'birthday' => 'date'
     ];
 
     public function kehadiran()

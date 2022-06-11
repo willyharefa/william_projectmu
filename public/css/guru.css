@@ -1,0 +1,29 @@
+.section-absensi .container {
+  margin-top: 50px;
+}
+.section-absensi .container .row .btn {
+  padding: 20px;
+  height: 100px;
+  display: grid;
+  place-content: center;
+  color: white;
+  border-radius: 9px;
+}
+.section-absensi .container .row.satu .btn {
+  background-color: #3A86FF;
+}
+.section-absensi .container .row.dua .btn {
+  background-color: #8338EC;
+}
+.section-absensi .container .row.tiga .btn {
+  background-color: #E63946;
+}
+.section-absensi .container .row.empat .btn {
+  background-color: #F77F00;
+}
+.section-absensi .container .row.lima .btn {
+  background-color: #560BAD;
+}
+.section-absensi .container .row.enam .btn {
+  background-color: #0077B6;
+}

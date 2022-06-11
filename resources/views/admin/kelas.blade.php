@@ -16,19 +16,13 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kelas</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title">Tambah Data Kelas</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="mb-3">
-                                        <label for="kode_kelas" class="form-label">Kode kelas</label>
-                                        <input type="text" class="form-control @error('kode_kelas') is-invalid @enderror" id="kode_kelas" name="kode_kelas" required autocomplete="off" spellcheck="false" placeholder="Ex: K-0001" value="{{ old('kode_kelas') }}" autofocus>
-                                        <div class="form-text">Kode kelas tidak boleh duplicate dari database.</div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="name_kelas" class="form-label">Nama kelas</label>
-                                        <input type="text" class="form-control" id="name_kelas" name="nama_kelas" required autocomplete="off" spellcheck="false" placeholder="Ex: Kelas IB" value="{{ old('nama_kelas') }}">
+                                        <label class="form-label">Nama kelas</label>
+                                        <input type="text" class="form-control" name="name" required autocomplete="off" spellcheck="false" placeholder="Ex: Kelas IB" value="{{ old('name') }}">
                                     </div>
                                 </div>
                             </div>
@@ -42,22 +36,11 @@
             </div>
         </div>
         <div class="row g-0 mt-3">
-            @if ($message = session('success')) 
-            <div class="alert alert-success mt-3" role="alert">
-                {{ $message }}
-            </div>
-            @endif
-            @if ($errors->first('kode_kelas')) 
-            <div class="alert alert-danger mt-3" role="alert">
-                {{ $errors->first('kode_kelas') }}
-            </div>
-            @endif
             <div class="table-responsive">
                 <table class="table table-borderless align-middle text-nowrap">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Kode Kelas</th>
                             <th scope="col">Nama Kelas</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -66,10 +49,9 @@
                         @forelse ($kelas as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->kode_kelas }}</td>
-                            <td>{{ $item->nama_kelas }}</td>
+                            <td>{{ $item->class }}</td>
                             <td>
-                                <button type="button" class="btn btn-edit bg-warning" data-bs-toggle="modal" data-bs-target="#edit-kelas-{{ $item->id }}">
+                                <button type="button" class="btn bg-warning" data-bs-toggle="modal" data-bs-target="#edit-kelas-{{ $item->id }}">
                                     <i class="fas fa-edit"></i>
                                     Edit
                                 </button>
@@ -81,19 +63,13 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data kelas</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <h5 class="modal-title">Edit Data kelas</h5>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="mb-3">
-                                                            <label for="name_kelas" class="form-label">Kode kelas</label>
-                                                            <input type="text" class="form-control" id="name_kelas" name="kode_kelas" required autocomplete="off" spellcheck="false" placeholder="Ex: K-0001" value="{{ $item->kode_kelas }}" autofocus>
-                                                            <div class="form-text">Kode kelas tidak boleh duplicate dari database.</div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="name_kelas" class="form-label">Nama kelas</label>
-                                                            <input type="text" class="form-control" id="name_kelas" name="nama_kelas" required autocomplete="off" spellcheck="false" placeholder="Ex: Kelas IB" value="{{ $item->nama_kelas}}">
+                                                            <label class="form-label">Nama kelas</label>
+                                                            <input type="text" class="form-control" name="new_name" required autocomplete="off" spellcheck="false" placeholder="Ex: Kelas IB" value="{{ $item->class}}">
                                                         </div>
                                                     </div>
                                                 </div>

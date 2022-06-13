@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Siswa;
 use App\Models\Kehadiran;
+use App\Models\Nilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -43,5 +44,43 @@ class GuruController extends Controller
             'mapel_id' => $request->new_mapel_id
         ]);
         return redirect()->back()->with('success', 'Data kehadiran berhasil diperbaharui');
+    }
+
+    public function nilai()
+    {
+        $title = "Data Kelas";
+        return view('admin.data-nilai', compact('title'));
+    }
+
+    public function nilaiKelas($tag)
+    {
+        $title = "Data Nilai Kelas";
+        $siswa = Siswa::where('class', $tag)->get();
+        $nilai = Nilai::where('name_class', $tag)->get();
+        $nameClass = $tag;
+        return view('guru.nilai', compact('title', 'siswa', 'nameClass', 'nilai'));
+    }
+
+    public function inputNilai(Request $request)
+    {
+        // dd($request);
+
+        for ($i=0; $i < count($request->siswa_id); $i++) { 
+            Nilai::create([
+                'siswa_id' => $request->siswa_id[$i],
+                'name_class' => $request->name_class[$i],
+                'agama' => $request->agama[$i],
+                'pkn' => $request->pkn[$i],
+                'bindo' => $request->bindo[$i],
+                'bingg' => $request->bingg[$i],
+                'mtk' => $request->mtk[$i],
+                'ipa' => $request->ipa[$i],
+                'ips' => $request->ips[$i],
+                'sbd' => $request->sbd[$i],
+                'pjok' => $request->pjok[$i],
+                'tik' => $request->tik[$i]
+            ]);
+        }
+        return redirect()->back()->with("success", "Data nilai kelas berhasil di input.");
     }
 }

@@ -70,7 +70,7 @@
                             <div class="collapse" id="absensi" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{{ route('absensi') }}">Absensi Siswa</a>
-                                    <a class="nav-link" href="#">Nilai Siswa</a>
+                                    <a class="nav-link" href="{{ route('nilai') }}">Nilai Siswa</a>
                                     <a class="nav-link" href="/data_kelas">Data Kelas</a>
                                 </nav>
                             </div>
@@ -92,6 +92,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
         <script src="{{ asset('js/scripts.js') }}"></script>
-        @stack('script ')
+        @stack('script')
     </body>
 </html>

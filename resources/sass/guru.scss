@@ -43,3 +43,17 @@
         }
     }
 }
+
+.data-kelas {
+    .wrapper__class {
+        margin-top: 60px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        a {
+            height: 60px !important;
+            display: grid;
+            place-content: center;
+        }
+    }
+}

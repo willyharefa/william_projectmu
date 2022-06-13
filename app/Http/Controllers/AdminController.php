@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absensi;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Siswa;
 use App\Models\Kehadiran;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -190,5 +192,44 @@ class AdminController extends Controller
             'class' => $request->new_name
         ]);
         return redirect()->back()->with('success', 'Data kelas berhasil diperbaharui');
+    }
+
+    public function absensiKelas($tag)
+    {
+        $kelas = Siswa::where('class', $tag)->get();
+        $mapel = Mapel::all();
+        $title = 'Absensi Data Kelas';
+        $nameClass = $tag;
+        return view('admin.data-kelas', compact('title', 'kelas', 'mapel', 'nameClass'));
+    }
+
+    public function createAbsent(Request $request)
+    {
+        // dd($request->name_student[1]);
+        // dd($request);
+        for ($i=0; $i < count($request->date_absent); $i++) { 
+            Absensi::create([
+                'name_student' => $request->name_student[$i],
+                'name_class' => $request->name_class[$i],
+                'mapel_id' => $request->mapel,
+                'time_in' => $request->time_in[$i],
+                'time_out' => $request->time_out[$i],
+                'name_teacher' => $request->name_teacher,
+                'date_absent' => $request->date_absent[$i]
+            ]);
+        }
+
+        return redirect()->back()->with("success", "Selamat, data absensi berhasil di simpan.");
+    } 
+
+    public function dataAbsen($id, $tag)
+    {
+        $title = "Data Absensi Kelas";
+        $dateNow = Carbon::now()->format('Y-m-d');
+        // dd($dateNow);
+        $tagName = $tag;
+        $absensi = Absensi::where('mapel_id', $id)->where('name_class', $tag)->where('date_absent', $dateNow)->get();
+        // dd($absensi);
+        return view('admin.data-absen', compact('title', 'absensi', 'tagName'));
     }
 }

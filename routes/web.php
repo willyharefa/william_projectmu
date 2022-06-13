@@ -38,13 +38,20 @@ Route::middleware('auth:web,guru,admin')->group(function () {
     Route::get('/dashboard/admin/mapel', [AdminController::class, 'mapel'])->name('mapel');             // Masuk ke halaman Mata Pelajaran
     Route::get('/dashboard/admin/guru', [AdminController::class, 'guru'])->name('guru');                // Masuk ke halaman guru
     Route::get('/dashboard/admin/kelas', [AdminController::class, 'kelas'])->name('kelas');             // Masuk ke halaman kelas
-    Route::get('/dashboard/admin/siswa', [AdminController::class, 'siswa'])->name('siswa');             // Masuk ke halaman siswa
+    Route::get('/dashboard/admin/siswa', [AdminController::class, 'siswa'])->name('siswa');  
+    Route::get('dashboard/admin/absensi/kelas/{tag}', [AdminController::class, 'absensiKelas'])->name('absensi_kelas');
+    Route::post('/dashboard/admin/create/absen', [AdminController::class, 'createAbsent'])->name('create_absent');
+    Route::get('/dashboard/data-absen/{id}/{tag}', [AdminController::class, 'dataAbsen'])->name('data_absen');
+    
 
     Route::get('/logout', [Controller::class, 'logout'])->name('logout');
 });
 
 Route::middleware('auth:guru')->group(function () {
     Route::get('/dashboard/guru/absensi', [GuruController::class, 'absensi'])->name('absensi');       // Masuk ke halaman Input Data Kehadiran
+    Route::get('/dashboard/nilai', [GuruController::class, 'nilai'])->name('nilai');
+    Route::get('/dashboard/nilai/kelas/{tag}', [GuruController::class, 'nilaiKelas'])->name('nilai_kelas');
+    Route::post('/dashboard/input/nilai', [GuruController::class, 'inputNilai'])->name('input_nilai');
 });
 
 // Kode program untuk menambah mapel dan membuat mapel

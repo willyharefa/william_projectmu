@@ -19,4 +19,9 @@ class Siswa extends Model
     {
         return $this->hasMany(Kehadiran::class);
     }
+
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class);
+    }
 }
